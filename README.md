@@ -1,6 +1,6 @@
-# Godot Play Game Services
+# Godot Play Games Services
 
-Godot 4.2+ plugin for integration of the latest version of [Google Play Game Services SDK](https://developers.google.com/games/services/android/quickstart).
+Godot 4.2+ plugin for integration of the latest version of [Google Play Games Services SDK](https://developers.google.com/games/services/android/quickstart).
 
 ---
 
@@ -8,7 +8,7 @@ Godot 4.2+ plugin for integration of the latest version of [Google Play Game Ser
 
 [![Android version and API level 33](https://img.shields.io/badge/Android-API%20Level%2033-darkgreen.svg)](https://developer.android.com)
 [![Godot version 4.2](https://img.shields.io/badge/Godot%20Engine-4.2-blue.svg)](https://github.com/godotengine/godot/)
-[![Google Play Game Services version 19.0.0](https://img.shields.io/badge/Play%20Services%20Games%20v2-19.0.0-green.svg)](https://developers.google.com/games/services/android/quickstart)
+[![Google Play Games Services version 19.0.0](https://img.shields.io/badge/Play%20Services%20Games%20v2-19.0.0-green.svg)](https://developers.google.com/games/services/android/quickstart)
 
 ---
 
@@ -86,13 +86,13 @@ In order to make the configuration easier, the plugin adds a new dock to the bot
 
 ![Screenshot of the new dock in the bottom panel of the Godot Editor](docs/images/plugin_dock.png)
 
-> :warning: Beware of not changing the Game Id and submitting by mistake, since that will break the integration with Google Game Services.
+> :warning: Beware of not changing the Game Id and submitting by mistake, since that will break the integration with Google Games Services.
 
 ### Export configuration
 
 To be able to use the plugin, you need to use a **custom gradle build**. Please note that The steps to do so, are explained with detail in the [Godot Documentation](https://docs.godotengine.org/en/stable/tutorials/export/android_gradle_build.html).
 
-An additional configuration has to be made in order to connect with Google Game Services. In the Google App, you have to configure an **Android OAuth client**. Google describes the steps [here](https://developers.google.com/games/services/console/enabling#step_3_generate_an_oauth_20_client_id), but at some point you have to introduce the **package name** of your game, as well as the **SHA-1 of your signing key**. Both things need to be introduced also in the Godot Export configuration for Android:
+An additional configuration has to be made in order to connect with Google Games Services. In the Google App, you have to configure an **Android OAuth client**. Google describes the steps [here](https://developers.google.com/games/services/console/enabling#step_3_generate_an_oauth_20_client_id), but at some point you have to introduce the **package name** of your game, as well as the **SHA-1 of your signing key**. Both things need to be introduced also in the Godot Export configuration for Android:
 
 ![Screenshot of the relevant section inside the export configuration for Android in the Godot editor](docs/images/android_export.png)
 
@@ -108,11 +108,11 @@ The GDScript code is documented in the code itself, so you can access it via the
 
 ### Google
 
-Google provides lots of documentation for integrating with Google Play Game Services, creating an app, etc.
+Google provides lots of documentation for integrating with Google Play Games Services, creating an app, etc.
 
-The main page for Game Services is [this one](https://developers.google.com/games/services). There you can find the [Guides](https://developers.google.com/games/services/common/concepts/achievements) section and the [Reference](https://developers.google.com/games/services/reference) section, which contains the technical documentation of their API.
+The main page for Games Services is [this one](https://developers.google.com/games/services). There you can find the [Guides](https://developers.google.com/games/services/common/concepts/achievements) section and the [Reference](https://developers.google.com/games/services/reference) section, which contains the technical documentation of their API.
 
-When it comes to Google Play Console, the main page is [here](https://developer.android.com/distribute/console), but the Google Play Game Services documentation also provides a good setup guide [here](https://developers.google.com/games/services/console/enabling).
+When it comes to Google Play Console, the main page is [here](https://developer.android.com/distribute/console), but the Google Play Games Services documentation also provides a good setup guide [here](https://developers.google.com/games/services/console/enabling).
 
 ## Troubleshooting
 
