@@ -18,7 +18,7 @@ Godot 4.2+ plugin for integration of the latest version of [Google Play Game Ser
 - [Install the plugin](#install-the-plugin)
 - [The Demo project](#the-demo-project)
 - [Building the plugin yourself](#building-the-plugin-yourself)
-  - [Downloading the plugin](#downloading-the-plugin)
+  - [Downloading the repository](#downloading-the-repository)
   - [Building the plugin](#building-the-plugin)
   - [Testing the plugin](#testing-the-plugin)
   - [Configuring the plugin](#configuring-the-plugin)
