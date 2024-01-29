@@ -1,8 +1,10 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.signin
 
 import android.util.Log
+import com.google.android.gms.games.AuthenticationResult
 import com.google.android.gms.games.GamesSignInClient
 import com.google.android.gms.games.PlayGames
+import com.google.android.gms.tasks.Task
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated
 import org.godotengine.godot.Godot
@@ -18,13 +20,14 @@ class SignInProxy(
     fun isAuthenticated() {
         Log.d(tag, "Checking if user is authenticated")
         gamesSignInClient.isAuthenticated.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(tag, "User authenticated: ${task.result.isAuthenticated}")
+            val isAuthenticated = task.isSuccessful && task.result.isAuthenticated
+            if (isAuthenticated) {
+                Log.d(tag, "User authenticated")
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
                     userAuthenticated,
-                    task.result.isAuthenticated
+                    true
                 )
             } else {
                 Log.e(tag, "User not authenticated. Cause: ${task.exception}", task.exception)
@@ -41,13 +44,14 @@ class SignInProxy(
     fun signIn() {
         Log.d(tag, "Signing in")
         gamesSignInClient.signIn().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(tag, "User signed in: ${task.result.isAuthenticated}")
+            val isAuthenticated = task.isSuccessful && task.result.isAuthenticated
+            if (isAuthenticated) {
+                Log.d(tag, "User signed in")
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
                     userAuthenticated,
-                    task.result.isAuthenticated
+                    true
                 )
             } else {
                 Log.e(tag, "User not signed in. Cause: ${task.exception}", task.exception)
