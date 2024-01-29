@@ -26,9 +26,9 @@ var _selected_collection: LeaderboardsClient.Collection
 
 func _ready() -> void:
 	if leaderboard:
-		GodotPlayGameServices.image_stored.connect(func(file_path: String):
+		GodotPlayGamesServices.image_stored.connect(func(file_path: String):
 			if file_path == leaderboard.icon_image_uri:
-				GodotPlayGameServices.display_image_in_texture_rect(
+				GodotPlayGamesServices.display_image_in_texture_rect(
 					icon_rect,
 					file_path
 				)

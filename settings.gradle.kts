@@ -15,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GodotPlayGameServices"
+rootProject.name = "godot-play-games-services"
 include(":plugin")

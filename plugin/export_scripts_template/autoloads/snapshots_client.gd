@@ -1,4 +1,4 @@
-class_name PlayGamesSnapshotsClient
+# class_name PlayGamesSnapshotsClient
 extends Node
 ## Client with save and load games functionality.
 ##
@@ -16,27 +16,27 @@ signal game_saved(is_saved: bool, save_data_name: String, save_data_description:
 ## method.[br]
 ## [br]
 ## [param snapshot]: The loaded snapshot.
-signal game_loaded(snapshot: Snapshot)
+signal game_loaded(snapshot: PlayGamesSnapshot)
 
 ## Signal emitted after saving or loading a game, if a conflict is found.[br]
 ## [br]
 ## [param conflict]: The conflict containing and id and both conflicting snapshots.
-signal conflict_emitted(conflict: SnapshotConflict)
+signal conflict_emitted(conflict: PlayGamesSnapshotConflict)
 
 ## Constant passed to the [method show_saved_games] method to not limit the number of displayed saved files.  
 const DISPLAY_LIMIT_NONE := -1
 
 func _ready() -> void:
-	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.gameSaved.connect(
+	if GodotPlayGamesServices.android_plugin:
+		GodotPlayGamesServices.android_plugin.gameSaved.connect(
 			func(is_saved: bool, save_data_name: String, save_data_description: String):
 				game_saved.emit(is_saved, save_data_name, save_data_description)
 		)
-		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(dictionary: Dictionary):
-			game_loaded.emit(Snapshot.new(dictionary))
+		GodotPlayGamesServices.android_plugin.gameLoaded.connect(func(dictionary: Dictionary):
+			game_loaded.emit(PlayGamesSnapshot.new(dictionary))
 		)
-		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(dictionary: Dictionary):
-			conflict_emitted.emit(SnapshotConflict.new(dictionary))
+		GodotPlayGamesServices.android_plugin.conflictEmitted.connect(func(dictionary: Dictionary):
+			conflict_emitted.emit(PlayGamesSnapshotConflict.new(dictionary))
 		)
 
 ## Opens a new window to display the saved games for the current player. If you select
@@ -52,8 +52,8 @@ func show_saved_games(
 	allow_delete: bool, 
 	max_snapshots: int
 ) -> void:
-	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.showSavedGames(title, allow_add_button, allow_delete, max_snapshots)
+	if GodotPlayGamesServices.android_plugin:
+		GodotPlayGamesServices.android_plugin.showSavedGames(title, allow_add_button, allow_delete, max_snapshots)
 
 ## Saves game data to the Google Cloud.[br]
 ## [br]
@@ -70,8 +70,8 @@ func save_game(
 	played_time_millis: int = 0,
 	progress_value: int = 0,
 ) -> void:
-	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.saveGame(file_name, description, save_data, played_time_millis, progress_value)
+	if GodotPlayGamesServices.android_plugin:
+		GodotPlayGamesServices.android_plugin.saveGame(file_name, description, save_data, played_time_millis, progress_value)
 
 ## Loads game data from the Google Cloud.[br]
 ## [br]
@@ -79,18 +79,18 @@ func save_game(
 ## [br]
 ## [param fileName]: The name of the save file. Must be between 1 and 100 non-URL-reserved charactes (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
 func load_game(file_name: String):
-	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.loadGame(file_name)
+	if GodotPlayGamesServices.android_plugin:
+		GodotPlayGamesServices.android_plugin.loadGame(file_name)
 
 ## A snapshot.
-class Snapshot:
+class PlayGamesSnapshot:
 	var content: PackedByteArray ## A [PackedByteArray] with the contents of the snapshot.
-	var metadata: SnapshotMetadata ## The metadata of the snapshot.
+	var metadata: PlayGamesSnapshotMetadata ## The metadata of the snapshot.
 	
-	## Constructor that creates a Snapshot from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesSnapshot from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("content"): content = dictionary.content
-		if dictionary.has("metadata"): metadata = SnapshotMetadata.new(dictionary.metadata)
+		if dictionary.has("metadata"): metadata = PlayGamesSnapshotMetadata.new(dictionary.metadata)
 	
 	func _to_string() -> String:
 		var result := PackedStringArray()
@@ -101,16 +101,16 @@ class Snapshot:
 		return ", ".join(result)
 
 ## A class representing a conflict when saving or loading data.
-class SnapshotConflict:
+class PlayGamesSnapshotConflict:
 	var conflict_id: String ## The conflict id.
-	var conflicting_snapshot: Snapshot ## The modified version of the Snapshot in the case of a conflict. This may not be the same as the version that you tried to save.
-	var server_snapshot: Snapshot ## The most-up-to-date version of the Snapshot known by Google Play games services to be accurate for the player’s device.
+	var conflicting_snapshot: PlayGamesSnapshot ## The modified version of the PlayGamesSnapshot in the case of a conflict. This may not be the same as the version that you tried to save.
+	var server_snapshot: PlayGamesSnapshot ## The most-up-to-date version of the PlayGamesSnapshot known by Google Play games services to be accurate for the player’s device.
 	
-	## Constructor that creates a SnapshotConflict from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesSnapshotConflict from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("conflictId"): conflict_id = dictionary.conflictId
-		if dictionary.has("conflictingSnapshot"): conflicting_snapshot = Snapshot.new(dictionary.conflictingSnapshot)
-		if dictionary.has("serverSnapshot"): server_snapshot = Snapshot.new(dictionary.serverSnapshot)
+		if dictionary.has("conflictingSnapshot"): conflicting_snapshot = PlayGamesSnapshot.new(dictionary.conflictingSnapshot)
+		if dictionary.has("serverSnapshot"): server_snapshot = PlayGamesSnapshot.new(dictionary.serverSnapshot)
 	
 	func _to_string() -> String:
 		var result := PackedStringArray()
@@ -121,8 +121,8 @@ class SnapshotConflict:
 		
 		return ", ".join(result)
 
-## The metadata of a Snapshot.
-class SnapshotMetadata:
+## The metadata of a PlayGamesSnapshot.
+class PlayGamesSnapshotMetadata:
 	var snapshot_id: String ## The ID of the snapshot.
 	var unique_name: String ## The unique identifier of this snapshot. This is the file_name parameter passed to the save_game method.
 	var description: String ## The description of the snapshot. This is the description parameter passed to the save_game method.
@@ -131,12 +131,12 @@ class SnapshotMetadata:
 	var last_modified_timestamp: int ## The last time this snapshot was modified, in millis since epoch.
 	var played_time: int ## The played time of this snapshot in milliseconds.
 	var has_change_pending: bool ## Indicates whether or not this snapshot has any changes pending that have not been uploaded to the server.
-	var owner: PlayersClient.Player ## The player that owns this snapshot.
-	var game: GameInfo ## The game information associated with this snapshot.
+	var owner: PlayGamesPlayersClient.PlayGamesPlayer ## The player that owns this snapshot.
+	var game: PlayGamesGameInfo ## The game information associated with this snapshot.
 	var device_name: String ## The name of the device that wrote this snapshot, if known.
 	var cover_image_uri: String ## The snapshot cover image.
 	
-	## Constructor that creates a SnapshotMetadata from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesSnapshotMetadata from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("snapshotId"): snapshot_id = dictionary.snapshotId
 		if dictionary.has("uniqueName"): unique_name = dictionary.uniqueName
@@ -146,8 +146,8 @@ class SnapshotMetadata:
 		if dictionary.has("lastModifiedTimestamp"): last_modified_timestamp = dictionary.lastModifiedTimestamp
 		if dictionary.has("playedTime"): played_time = dictionary.playedTime
 		if dictionary.has("hasChangePending"): has_change_pending = dictionary.hasChangePending
-		if dictionary.has("owner"): owner = PlayersClient.Player.new(dictionary.owner)
-		if dictionary.has("game"): game = GameInfo.new(dictionary.game)
+		if dictionary.has("owner"): owner = PlayGamesPlayersClient.PlayGamesPlayer.new(dictionary.owner)
+		if dictionary.has("game"): game = PlayGamesGameInfo.new(dictionary.game)
 		if dictionary.has("deviceName"): device_name = dictionary.deviceName
 		if dictionary.has("coverImageUri"): cover_image_uri = dictionary.coverImageUri
 	
@@ -170,7 +170,7 @@ class SnapshotMetadata:
 		return ", ".join(result)
 
 ## A class with information about a game.
-class GameInfo:
+class PlayGamesGameInfo:
 	var are_snapshots_enabled: bool ## Indicates whether or not this game supports snapshots.
 	var achievement_total_count: int ## The number of achievements registered for this game.
 	var application_id: String ## The application ID for this game.

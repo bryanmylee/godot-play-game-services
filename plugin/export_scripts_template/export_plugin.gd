@@ -1,12 +1,12 @@
 @tool
 extends EditorPlugin
 
-const PLUGIN_AUTOLOAD := "GodotPlayGameServices"
-const SIGN_IN_AUTOLOAD := "SignInClient"
-const ACHIEVEMENTS_AUTOLOAD := "AchievementsClient"
-const LEADERBOARDS_AUTOLOAD := "LeaderboardsClient"
-const PLAYERS_AUTOLOAD := "PlayersClient"
-const SNAPSHOTS_AUTOLOAD := "SnapshotsClient"
+const PLUGIN_AUTOLOAD := "GodotPlayGamesServices"
+const SIGN_IN_AUTOLOAD := "PlayGamesSignInClient"
+const ACHIEVEMENTS_AUTOLOAD := "PlayGamesAchievementsClient"
+const LEADERBOARDS_AUTOLOAD := "PlayGamesLeaderboardsClient"
+const PLAYERS_AUTOLOAD := "PlayGamesPlayersClient"
+const SNAPSHOTS_AUTOLOAD := "PlayGamesSnapshotsClient"
 
 var _export_plugin : AndroidExportPlugin
 var _dock : Node
@@ -31,7 +31,7 @@ func _remove_plugin() -> void:
 
 func _add_docks() -> void:
 	var dock_name := "Godot Play Game Services"
-	_dock = preload("res://addons/GodotPlayGameServices/godot_play_game_services_dock.tscn").instantiate()
+	_dock = preload("res://addons/godot-play-games-services/godot_play_games_services_dock.tscn").instantiate()
 	add_control_to_bottom_panel(_dock, dock_name)
 
 func _remove_docks() -> void:
@@ -39,12 +39,12 @@ func _remove_docks() -> void:
 	_dock.free()
 
 func _add_autoloads() -> void:
-	add_autoload_singleton(PLUGIN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/godot_play_game_services.gd")
-	add_autoload_singleton(SIGN_IN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd")
-	add_autoload_singleton(ACHIEVEMENTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/achievements_client.gd")
-	add_autoload_singleton(LEADERBOARDS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/leaderboards_client.gd")
-	add_autoload_singleton(PLAYERS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/players_client.gd")
-	add_autoload_singleton(SNAPSHOTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/snapshots_client.gd")
+	add_autoload_singleton(PLUGIN_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/godot_play_games_services.gd")
+	add_autoload_singleton(SIGN_IN_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/sign_in_client.gd")
+	add_autoload_singleton(ACHIEVEMENTS_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/achievements_client.gd")
+	add_autoload_singleton(LEADERBOARDS_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/leaderboards_client.gd")
+	add_autoload_singleton(PLAYERS_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/players_client.gd")
+	add_autoload_singleton(SNAPSHOTS_AUTOLOAD, "res://addons/godot-play-games-services/autoloads/snapshots_client.gd")
 
 func _remove_autoloads() -> void:
 	remove_autoload_singleton(PLUGIN_AUTOLOAD)
@@ -55,7 +55,7 @@ func _remove_autoloads() -> void:
 	remove_autoload_singleton(SNAPSHOTS_AUTOLOAD)
 
 class AndroidExportPlugin extends EditorExportPlugin:
-	var _plugin_name = "GodotPlayGameServices"
+	var _plugin_name = "godot-play-games-services"
 
 	func _supports_platform(platform):
 		if platform is EditorExportPlatformAndroid:

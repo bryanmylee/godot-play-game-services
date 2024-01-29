@@ -22,12 +22,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GodotPlayGameServices="*res://addons/GodotPlayGameServices/autoloads/godot_play_game_services.gd"
-SignInClient="*res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd"
-AchievementsClient="*res://addons/GodotPlayGameServices/autoloads/achievements_client.gd"
-LeaderboardsClient="*res://addons/GodotPlayGameServices/autoloads/leaderboards_client.gd"
-PlayersClient="*res://addons/GodotPlayGameServices/autoloads/players_client.gd"
-SnapshotsClient="*res://addons/GodotPlayGameServices/autoloads/snapshots_client.gd"
+godot-play-games-services="*res://addons/godot-play-games-services/autoloads/godot_play_games_services.gd"
+PlayGamesSignInClient="*res://addons/godot-play-games-services/autoloads/sign_in_client.gd"
+PlayGamesAchievementsClient="*res://addons/godot-play-games-services/autoloads/achievements_client.gd"
+LeaderboardsClient="*res://addons/godot-play-games-services/autoloads/leaderboards_client.gd"
+PlayersClient="*res://addons/godot-play-games-services/autoloads/players_client.gd"
+SnapshotsClient="*res://addons/godot-play-games-services/autoloads/snapshots_client.gd"
 
 [display]
 
@@ -37,7 +37,7 @@ window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotPlayGameServices/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-play-games-services/plugin.cfg")
 
 [file_customization]
 

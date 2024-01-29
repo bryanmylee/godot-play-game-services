@@ -30,9 +30,9 @@ The first thing the project does is checking if the user is authenticated, and i
 [source,gdscript,linenums]
 ----
 func _ready() -> void:
-	SignInClient.user_authenticated.connect(func(is_authenticated: bool): # <1>
+	PlayGamesSignInClient.user_authenticated.connect(func(is_authenticated: bool): # <1>
 		if not is_authenticated:
-			SignInClient.sign_in()
+			PlayGamesSignInClient.sign_in()
 	)
     # ... more code ...
 ----
@@ -65,12 +65,12 @@ Closing that window by swiping it down, you will be back at the achievements men
 ----
 func _ready() -> void:
 	if _achievements_cache.is_empty():
-		AchievementsClient.load_achievements(true) # <1>
-	AchievementsClient.achievements_loaded.connect( # <2>
-		func cache_and_display(achievements: Array[AchievementsClient.Achievement]):
+		PlayGamesAchievementsClient.load_achievements(true) # <1>
+	PlayGamesAchievementsClient.achievements_loaded.connect( # <2>
+		func cache_and_display(achievements: Array[PlayGamesAchievementsClient.Achievement]):
 			_achievements_cache = achievements
 			if not _achievements_cache.is_empty() and achievement_displays.get_child_count() == 0:
-				for achievement: AchievementsClient.Achievement in _achievements_cache: # <3>
+				for achievement: PlayGamesAchievementsClient.Achievement in _achievements_cache: # <3>
 					var container := _achievement_display.instantiate() as Control
 					container.achievement = achievement
 					achievement_displays.add_child(container)

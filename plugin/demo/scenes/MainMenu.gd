@@ -9,13 +9,13 @@ extends Control
 var _sign_in_retries := 5
 
 func _ready() -> void:
-	if not GodotPlayGameServices.android_plugin:
+	if not GodotPlayGamesServices.android_plugin:
 		title_label.text = "Plugin Not Found!"
 	
-	SignInClient.user_authenticated.connect(func(is_authenticated: bool):
+	PlayGamesSignInClient.user_authenticated.connect(func(is_authenticated: bool):
 		if _sign_in_retries > 0 and not is_authenticated:
 			title_label.text = "Trying to sign in!"
-			SignInClient.sign_in()
+			PlayGamesSignInClient.sign_in()
 			_sign_in_retries -= 1
 		
 		if _sign_in_retries == 0:
