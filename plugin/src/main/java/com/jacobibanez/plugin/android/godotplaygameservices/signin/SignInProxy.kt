@@ -6,6 +6,7 @@ import com.google.android.gms.games.GamesSignInClient
 import com.google.android.gms.games.PlayGames
 import com.google.android.gms.tasks.Task
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.serverSideAccessRequested
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
@@ -58,5 +59,38 @@ class SignInProxy(
                 emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, userAuthenticated, false)
             }
         }
+    }
+
+    fun signInRequestServerSideAccess(serverClientId: String, forceRefreshToken: Boolean) {
+        Log.d(
+            tag,
+            "Requesting server side access for client id $serverClientId with refresh token $forceRefreshToken"
+        )
+        gamesSignInClient.requestServerSideAccess(serverClientId, forceRefreshToken)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(tag, "Access granted to server side for user: $serverClientId")
+                    emitSignal(
+                        godot,
+                        BuildConfig.GODOT_PLUGIN_NAME,
+                        serverSideAccessRequested,
+                        true,
+                        task.result
+                    )
+                } else {
+                    Log.e(
+                        tag,
+                        "Failed to request server side access. Cause: ${task.exception}",
+                        task.exception
+                    )
+                    emitSignal(
+                        godot,
+                        BuildConfig.GODOT_PLUGIN_NAME,
+                        serverSideAccessRequested,
+                        false,
+                        task.exception,
+                    )
+                }
+            }
     }
 }

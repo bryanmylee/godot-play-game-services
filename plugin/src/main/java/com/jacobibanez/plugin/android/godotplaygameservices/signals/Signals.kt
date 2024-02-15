@@ -6,6 +6,7 @@ import org.godotengine.godot.plugin.SignalInfo
 /** @suppress */
 fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     SignInSignals.userAuthenticated,
+    SignInSignals.serverSideAccessRequested,
 
     AchievementsSignals.achievementUnlocked,
     AchievementsSignals.achievementsLoaded,
@@ -38,6 +39,13 @@ object SignInSignals {
      * @return `true` if the user is authenticated. `false` otherwise.
      */
     val userAuthenticated = SignalInfo("userAuthenticated", Boolean::class.javaObjectType)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.requestServerSideAccess] method.
+     *
+     * @return `true` if the request is successful and an OAuth 2.0 authorization code as a string, or `false` and the exception otherwise.
+     */
+    var serverSideAccessRequested = SignalInfo("serverSideAccessRequested", Boolean::class.javaObjectType, String::class.java)
 
     /**
      * This signal was emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.signIn] method.
